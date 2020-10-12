@@ -1,16 +1,28 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import Animated, { interpolate } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
-const ButtonContainer = () => {
+const ButtonContainer = ({arrowOpacityAnimation}) => {
+
+  const loginOpacity = interpolate(arrowOpacityAnimation, {
+    inputRange: [0, 1],
+    outputRange: [1, 0]
+  })
+
+  const signUpOpacity = interpolate(arrowOpacityAnimation, {
+    inputRange: [0, 1],
+    outputRange: [0, 1]
+  })
+
   return (
     <View style={styles.container}>
-      <View
+      <Animated.View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          opacity: 1,
+          opacity: loginOpacity,
           height: 50,
           width: '70%',
           backgroundColor: '#74B5FF',
@@ -22,26 +34,25 @@ const ButtonContainer = () => {
         <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>
           LOGIN
         </Text>
-      </View>
+      </Animated.View>
 
-      <View
-        style={{
-          marginTop: 5,
+      <Animated.View
+        style={{         
           justifyContent: 'center',
           alignItems: 'center',
-          opacity: 1,
+          opacity: signUpOpacity,
           height: 50,
           width: '70%',
           backgroundColor: '#6070FF',
           elevation: 5,
           borderRadius: 40,
-          //position:'absolute',        
+          position:'absolute',        
         }}
       >
         <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>
           SIGNUP
         </Text>
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -53,8 +64,7 @@ const styles = StyleSheet.create({
     height: 50,
     width,
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    //backgroundColor: 'green'
+    alignItems: 'center',    
   },
 });
 

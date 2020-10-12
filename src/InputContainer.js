@@ -2,10 +2,23 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Animated, { interpolate } from 'react-native-reanimated';
 // create a component
-const InputContainer = () => {
+const InputContainer = ({arrowOpacityAnimation}) => {
+
+  const confirmPasswordY = interpolate(arrowOpacityAnimation, {
+    inputRange: [0, 1],
+    outputRange: [-50, 0]
+  })
+
+  const viewY = interpolate(arrowOpacityAnimation, {
+    inputRange: [0, 1],
+    outputRange: [0, -50]
+  })
+
+
   return (
-    <View style={[styles.container, { transform: [{ translateY: -40 }] }]}>
+    <Animated.View style={[styles.container, { transform: [{ translateY: viewY }] }]}>
       <View
         style={{
           backgroundColor: '#D6E8FC',
@@ -39,7 +52,7 @@ const InputContainer = () => {
         <Feather name="eye" color="black" size={20} />
       </View>
 
-      <View
+      <Animated.View
         style={{
           backgroundColor: '#D6E8FC',
           height: 40,
@@ -47,8 +60,10 @@ const InputContainer = () => {
           alignItems: 'center',
           justifyContent: 'space-between',
           borderRadius: 40,
-          paddingHorizontal: 20,          
-             
+          paddingHorizontal: 20,
+          opacity: 1,
+          transform: [{ translateY: confirmPasswordY }],
+          zIndex: -1,
         }}
       >
         <View style={{ flexDirection: 'row' }}>
@@ -56,8 +71,8 @@ const InputContainer = () => {
           <TextInput placeholder="Confirm Password" style={{ marginLeft: 5 }} />
         </View>
         <Feather name="eye" color="black" size={20} />
-      </View>
-    </View>
+      </Animated.View>
+    </Animated.View>
   );
 };
 

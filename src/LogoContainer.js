@@ -1,20 +1,35 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import Animated, { interpolate } from 'react-native-reanimated';
 import Svg, { Line } from 'react-native-svg';
 
 // create a component
-const LogoContainer = () => {
+const LogoContainer = ({arrowOpacityAnimation}) => {
+
+  const opacity = interpolate(arrowOpacityAnimation, {
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
+  const translateY = interpolate(arrowOpacityAnimation, {
+    inputRange: [0, 1],
+    outputRange: [0, 110],
+  });
+
+
+
   return (
-    <View
+    <Animated.View
       style={{
         height: 100,
         width: '50%',
         marginTop: 60,
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        position: 'absolute',        
-        opacity: 1,
+        position: 'absolute', 
+        transform: [{translateY}],      
+        opacity,
       }}
     >
       <View style={{ flexDirection: 'row' }}>
@@ -97,7 +112,7 @@ const LogoContainer = () => {
           />
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
